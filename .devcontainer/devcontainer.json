@@ -1,0 +1,17 @@
+{
+  "name": "palworld_exporter",
+  "dockerComposeFile": [
+    "../compose.yml",
+    "compose.devcontainer.yml"
+  ],
+  "service": "palworld_exporter",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "github.copilot"
+      ]
+    }
+  }
+}

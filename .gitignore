@@ -1,0 +1,5 @@
+# coverage
+*.out
+
+# binary
+palworld_exporter

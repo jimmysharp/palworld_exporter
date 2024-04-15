@@ -1,0 +1,16 @@
+{
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
+  "go.lintTool": "golangci-lint",
+  "[go]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[json][jsonc]": {
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.tabSize": 2
+  }
+}

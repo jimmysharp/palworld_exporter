@@ -1,0 +1,6 @@
+run:
+  allow-paralles-runners: true
+linters:
+  enable:
+    - gofmt
+    - gci

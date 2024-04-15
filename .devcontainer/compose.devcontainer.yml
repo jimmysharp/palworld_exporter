@@ -1,0 +1,4 @@
+services:
+  palworld_exporter:
+    command: /bin/sh -c "sleep infinity"
+    init: true

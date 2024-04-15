@@ -1,0 +1,8 @@
+services:
+  palworld_exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
