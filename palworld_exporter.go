@@ -13,6 +13,7 @@ import (
 	"github.com/jimmysharp/palworld_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/prometheus/common/version"
 )
 
 const (
@@ -47,6 +48,8 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	app.HelpFlag.Short('h')
+	app.Version(version.Print("palworld_exporter"))
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	config := &config.Config{
