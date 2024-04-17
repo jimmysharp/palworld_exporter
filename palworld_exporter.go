@@ -44,6 +44,20 @@ var (
 			String()
 )
 
+func createServer(config *config.Config) *http.Server {
+	exporter := collector.NewExporter(config)
+	prometheus.MustRegister(exporter)
+
+	mux := http.NewServeMux()
+	mux.Handle("/metrics", promhttp.Handler())
+	server := &http.Server{
+		Addr:    config.ListenAddress,
+		Handler: mux,
+	}
+
+	return server
+}
+
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
@@ -58,16 +72,8 @@ func main() {
 		HttpUsername:  *httpUsername,
 		HttpPassword:  *httpPassword,
 	}
-	exporter := collector.NewExporter(config)
-	prometheus.MustRegister(exporter)
 
-	mux := http.NewServeMux()
-	mux.Handle("/metrics", promhttp.Handler())
-	server := &http.Server{
-		Addr:    config.ListenAddress,
-		Handler: mux,
-	}
-
+	server := createServer(config)
 	go func() {
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			os.Exit(1)
