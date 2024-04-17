@@ -30,6 +30,12 @@ Flags:
 
 Options can be set both as command-line arguments and environments variables.
 
+## Docker
+
+```
+docker run -e SCRAPE_URI=<your server endpoint> -e HTTP_PASSWORD=<your server password> -p 18212:18212 --rm jimmysharp/palworld_exporter
+```
+
 ## Metrics
 
 |Name|Description|Type|
