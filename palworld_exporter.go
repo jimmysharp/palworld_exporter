@@ -1,14 +1,22 @@
 package main
 
 import (
+	"context"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/alecthomas/kingpin/v2"
 	"github.com/jimmysharp/palworld_exporter/collector"
 	"github.com/jimmysharp/palworld_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+)
+
+const (
+	shutdownTimeout = 5 * time.Second
 )
 
 var (
@@ -36,6 +44,9 @@ var (
 )
 
 func main() {
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	config := &config.Config{
@@ -47,8 +58,25 @@ func main() {
 	exporter := collector.NewExporter(config)
 	prometheus.MustRegister(exporter)
 
-	http.Handle("/metrics", promhttp.Handler())
-	if err := http.ListenAndServe(config.ListenAddress, nil); err != nil {
+	mux := http.NewServeMux()
+	mux.Handle("/metrics", promhttp.Handler())
+	server := &http.Server{
+		Addr:    config.ListenAddress,
+		Handler: mux,
+	}
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			os.Exit(1)
+		}
+	}()
+
+	<-ctx.Done()
+	stop()
+
+	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
+	defer cancel()
+	if err := server.Shutdown(ctx); err != nil {
 		os.Exit(1)
 	}
 }
