@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -11,6 +12,7 @@ import (
 	"github.com/alecthomas/kingpin/v2"
 	"github.com/jimmysharp/palworld_exporter/collector"
 	"github.com/jimmysharp/palworld_exporter/config"
+	"github.com/jimmysharp/palworld_exporter/log"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/version"
@@ -42,10 +44,22 @@ var (
 			Envar("HTTP_PASSWORD").
 			Required().
 			String()
+	logLevel = app.
+			Flag("log.level", "Only log messages with the given severity or above. If log.format is set 'default', this option is ignored. Valid levels: [debug, info, warn, error]").
+			Default("info").
+			Envar("LOG_LEVEL").
+			HintOptions("debug", "info", "warn", "error").
+			String()
+	logFormat = app.
+			Flag("log.format", "Output format of log messages. Valid formats: [default, text, json]").
+			Default("default").
+			Envar("LOG_FORMAT").
+			HintOptions("default", "text", "json").
+			String()
 )
 
-func createServer(config *config.Config) *http.Server {
-	exporter := collector.NewExporter(config)
+func createServer(config *config.Config, logger *slog.Logger) *http.Server {
+	exporter := collector.NewExporter(config, logger)
 	prometheus.MustRegister(exporter)
 
 	mux := http.NewServeMux()
@@ -71,21 +85,30 @@ func main() {
 		ScrapeURI:     *scrapeURI,
 		HttpUsername:  *httpUsername,
 		HttpPassword:  *httpPassword,
+		LogLevel:      *logLevel,
+		LogFormat:     *logFormat,
 	}
 
-	server := createServer(config)
+	logger := log.NewLogger(config)
+
+	server := createServer(config, logger)
 	go func() {
+		logger.Info("Starting palworld_exporter", slog.String("version", version.Info()))
+
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			logger.Error("Error starting server", slog.String("err", err.Error()))
 			os.Exit(1)
 		}
 	}()
 
 	<-ctx.Done()
 	stop()
+	logger.Info("Caught signal, Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
+		logger.Error("Error safely shutting down server", slog.String("err", err.Error()))
 		os.Exit(1)
 	}
 }

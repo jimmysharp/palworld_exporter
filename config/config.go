@@ -5,4 +5,7 @@ type Config struct {
 	ScrapeURI     string
 	HttpUsername  string
 	HttpPassword  string
+
+	LogLevel  string
+	LogFormat string
 }

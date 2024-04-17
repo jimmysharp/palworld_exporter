@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"log/slog"
 	"sync"
 
 	"github.com/jimmysharp/palworld_exporter/config"
@@ -14,6 +15,7 @@ const (
 type Exporter struct {
 	mutex sync.Mutex
 
+	logger *slog.Logger
 	client *PalworldClient
 
 	up               *prometheus.Desc
@@ -24,8 +26,9 @@ type Exporter struct {
 	uptime           *prometheus.Desc
 }
 
-func NewExporter(config *config.Config) *Exporter {
+func NewExporter(config *config.Config, logger *slog.Logger) *Exporter {
 	return &Exporter{
+		logger: logger,
 		client: NewPalworldClient(config),
 		up: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "up"),
@@ -76,6 +79,7 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	metrics, err := e.client.getPalworldMetrics()
 
 	if err != nil {
+		e.logger.Error("Error getting metrics", slog.String("err", err.Error()))
 		ch <- prometheus.MustNewConstMetric(e.up, prometheus.GaugeValue, 0)
 		return
 	}
