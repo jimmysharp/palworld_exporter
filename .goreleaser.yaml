@@ -35,7 +35,11 @@ dockers:
       - 'jimmysharp/{{.ProjectName}}:latest-amd64'
       - 'jimmysharp/{{.ProjectName}}:{{.Version}}-amd64'
     build_flag_templates:
-      - '--platform linux/amd64'
+      - '--platform=linux/amd64'
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
   - use: buildx
     goos: linux
     goarch: arm64
@@ -43,7 +47,12 @@ dockers:
       - 'jimmysharp/{{.ProjectName}}:latest-arm64v8'
       - 'jimmysharp/{{.ProjectName}}:{{.Version}}-arm64v8'
     build_flag_templates:
-      - '--platform linux/arm64/v8'
+      - '--platform=linux/arm64/v8'
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+
 docker_manifests:
   - name_template: 'jimmysharp/{{.ProjectName}}:latest'
     image_templates:
