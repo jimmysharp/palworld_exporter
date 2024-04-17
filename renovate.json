@@ -1,6 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:base",
+    ":prHourlyLimitNone",
+    ":semanticCommits",
+    "github>aquaproj/aqua-renovate-config#2.2.1"
+  ],
+  "timezone": "Asia/Tokyo",
+  "schedule": [
+    "every weekend"
+  ],
+  "prConcurrentLimit": 10,
+  "automerge": false,
+  "rangeStrategy": "bump",
+  "rebaseWhen": "conflicted",
+  "labels": [
+    "dependencies"
   ]
 }
