@@ -22,21 +22,26 @@ type PalworldMetricsResponse struct {
 }
 
 type PalworldClient struct {
-	ScrapeURI string
+	scrapeURI    string
+	httpUsername string
+	httpPassword string
 }
 
 func NewPalworldClient(config *config.Config) *PalworldClient {
 	return &PalworldClient{
-		ScrapeURI: config.ScrapeURI,
+		scrapeURI:    config.ScrapeURI,
+		httpUsername: config.HttpUsername,
+		httpPassword: config.HttpPassword,
 	}
 }
 
 func (c *PalworldClient) getPalworldMetrics() (*PalworldMetricsResponse, error) {
 	client := http.Client{Timeout: time.Duration(defaultTimeout)}
-	req, err := http.NewRequest(http.MethodGet, c.ScrapeURI, nil)
+	req, err := http.NewRequest(http.MethodGet, c.scrapeURI, nil)
 	if err != nil {
 		return nil, err
 	}
+	req.SetBasicAuth(c.httpUsername, c.httpPassword)
 
 	resp, err := client.Do(req)
 	if err != nil {
