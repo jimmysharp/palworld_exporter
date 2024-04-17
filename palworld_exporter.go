@@ -60,10 +60,11 @@ var (
 
 func createServer(config *config.Config, logger *slog.Logger) *http.Server {
 	exporter := collector.NewExporter(config, logger)
-	prometheus.MustRegister(exporter)
+	registry := prometheus.NewRegistry()
+	registry.MustRegister(exporter)
 
 	mux := http.NewServeMux()
-	mux.Handle("/metrics", promhttp.Handler())
+	mux.Handle("/metrics", promhttp.HandlerFor(registry, promhttp.HandlerOpts{}))
 	server := &http.Server{
 		Addr:    config.ListenAddress,
 		Handler: mux,
