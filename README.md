@@ -22,8 +22,7 @@ Flags:
       --http_user="admin"     Username for Palworld REST API basic authentication. ($HTTP_USER)
       --http_password=HTTP_PASSWORD  
                               Password for Palworld REST API basic authentication. ($HTTP_PASSWORD)
-      --log.level="info"      Only log messages with the given severity or above. If log.format is set 'default', this option is ignored. Valid levels: [debug,
-                              info, warn, error] ($LOG_LEVEL)
+      --log.level="info"      Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] ($LOG_LEVEL)
       --log.format="default"  Output format of log messages. Valid formats: [default, text, json] ($LOG_FORMAT)
       --[no-]version          Show application version.
 ```

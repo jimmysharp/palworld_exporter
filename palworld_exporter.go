@@ -45,7 +45,7 @@ var (
 			Required().
 			String()
 	logLevel = app.
-			Flag("log.level", "Only log messages with the given severity or above. If log.format is set 'default', this option is ignored. Valid levels: [debug, info, warn, error]").
+			Flag("log.level", "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error]").
 			Default("info").
 			Envar("LOG_LEVEL").
 			HintOptions("debug", "info", "warn", "error").

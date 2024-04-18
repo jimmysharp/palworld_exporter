@@ -26,6 +26,7 @@ func NewLogger(config *config.Config) *slog.Logger {
 	switch config.LogFormat {
 	case "default":
 		handler = slog.Default().Handler()
+		slog.SetLogLoggerLevel(logLevel)
 	case "json":
 		handler = slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 			Level: logLevel,
