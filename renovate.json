@@ -16,5 +16,8 @@
   "rebaseWhen": "conflicted",
   "labels": [
     "dependencies"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy"
   ]
 }
