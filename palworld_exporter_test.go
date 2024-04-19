@@ -1,16 +1,28 @@
 package main
 
 import (
+	"context"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/jimmysharp/palworld_exporter/config"
-	"github.com/jimmysharp/palworld_exporter/log"
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
 	"github.com/stretchr/testify/assert"
 )
+
+type DummyLogHandler struct{}
+
+func (*DummyLogHandler) Enabled(context.Context, slog.Level) bool   { return true }
+func (*DummyLogHandler) Handle(context.Context, slog.Record) error  { return nil }
+func (h *DummyLogHandler) WithAttrs(attrs []slog.Attr) slog.Handler { return h }
+func (h *DummyLogHandler) WithGroup(name string) slog.Handler       { return h }
+
+func newDummyLogger() *slog.Logger {
+	return slog.New(&DummyLogHandler{})
+}
 
 type metrics struct {
 	palworldUp               float64
@@ -53,7 +65,7 @@ func checkExportedMetrics(t *testing.T, stubHandler http.Handler) map[string]*dt
 		LogLevel:      "info",
 		LogFormat:     "default",
 	}
-	logger := log.NewLogger(config)
+	logger := newDummyLogger()
 	handler := createServer(config, logger).Handler
 	server := httptest.NewServer(handler)
 	defer server.Close()
