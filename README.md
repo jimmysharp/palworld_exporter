@@ -1,4 +1,10 @@
 # Palworld Exporter
+[![GitHub release](https://img.shields.io/github/v/release/jimmysharp/palworld_exporter?logo=github&sort=semver)](https://github.com/jimmysharp/palworld_exporter/releases/latest)
+[![Docker image version](https://img.shields.io/docker/v/jimmysharp/palworld_exporter/latest?logo=docker)](https://hub.docker.com/r/jimmysharp/palworld_exporter)
+[![Docker image size](https://img.shields.io/docker/image-size/jimmysharp/palworld_exporter/latest?logo=docker)](https://hub.docker.com/r/jimmysharp/palworld_exporter)
+[![GitHub CI status](https://github.com/jimmysharp/palworld_exporter/actions/workflows/ci.yml/badge.svg?event=push&branch=master)](https://github.com/jimmysharp/palworld_exporter/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/jimmysharp/palworld_exporter/graph/badge.svg?token=X5CJ3A2PHN)](https://codecov.io/gh/jimmysharp/palworld_exporter)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jimmysharp/palworld_exporter)](https://goreportcard.com/report/github.com/jimmysharp/palworld_exporter)
 
 Exports Palworld dedicated server metrics for prometheus.
 
