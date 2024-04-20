@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"sync"
 
+	"github.com/jimmysharp/palworld_exporter/client"
 	"github.com/jimmysharp/palworld_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -16,7 +17,7 @@ type Exporter struct {
 	mutex sync.Mutex
 
 	logger *slog.Logger
-	client *PalworldClient
+	client *client.PalworldClient
 
 	up               *prometheus.Desc
 	serverFps        *prometheus.Desc
@@ -29,7 +30,7 @@ type Exporter struct {
 func NewExporter(config *config.Config, logger *slog.Logger) *Exporter {
 	return &Exporter{
 		logger: logger,
-		client: NewPalworldClient(config),
+		client: client.NewPalworldClient(config),
 		up: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "up"),
 			"Palworld server up",
@@ -76,7 +77,7 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	e.mutex.Lock()
 	defer e.mutex.Unlock()
 
-	metrics, err := e.client.getPalworldMetrics()
+	metrics, err := e.client.GetMetrics()
 
 	if err != nil {
 		e.logger.Error("Error getting metrics", slog.String("err", err.Error()))
