@@ -1,4 +1,4 @@
-package collector
+package client
 
 import (
 	"encoding/json"
@@ -36,7 +36,7 @@ func NewPalworldClient(config *config.Config) *PalworldClient {
 	}
 }
 
-func (c *PalworldClient) getPalworldMetrics() (*PalworldMetricsResponse, error) {
+func (c *PalworldClient) GetMetrics() (*PalworldMetricsResponse, error) {
 	client := http.Client{Timeout: time.Duration(defaultTimeout)}
 	req, err := http.NewRequest(http.MethodGet, c.scrapeURI, nil)
 	if err != nil {
