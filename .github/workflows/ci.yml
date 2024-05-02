@@ -24,7 +24,7 @@ jobs:
           go-version-file: go.mod
       
       - name: Lint checks
-        uses: golangci/golangci-lint-action@v4
+        uses: golangci/golangci-lint-action@v5
         with:
           version: v1.57
 
