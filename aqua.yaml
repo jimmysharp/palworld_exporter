@@ -8,4 +8,4 @@ registries:
 packages:
   - name: golang.org/x/tools/gopls@v0.15.3
   - name: golangci/golangci-lint@v1.59.0
-  - name: goreleaser/goreleaser@v1.26.2
+  - name: goreleaser/goreleaser@v2.0.0
