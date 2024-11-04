@@ -1,10 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
-    ":prHourlyLimitNone",
     ":semanticCommits",
-    "github>aquaproj/aqua-renovate-config#2.3.1"
+    ":semanticPrefixChore",
+    ":ignoreModulesAndTests",
+    "group:monorepos",
+    "group:recommended",
+    "replacements:all",
+    "workarounds:all",
+    ":prHourlyLimitNone"
   ],
   "timezone": "Asia/Tokyo",
   "schedule": [
@@ -14,8 +18,47 @@
   "automerge": false,
   "rangeStrategy": "bump",
   "rebaseWhen": "conflicted",
+  "configMigration": true,
   "labels": [
     "dependencies"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update go install packages in Dockerfiles",
+      "fileMatch": [
+        "(^|/|\\.)Dockerfile$",
+        "(^|/)Dockerfile\\.[^/]*$"
+      ],
+      "matchStrings": [
+        "go install (?<depName>[^@]+?)@(?<currentValue>.+)\n"
+      ],
+      "datasourceTemplate": "go"
+    },
+    {
+      "customType": "regex",
+      "description": "Update _VERSION variables in Dockerfiles",
+      "fileMatch": [
+        "(^|/|\\.)Dockerfile$",
+        "(^|/)Dockerfile\\.[^/]*$"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s(?:ENV|ARG) .+?_VERSION=(?<currentValue>.+?)\\s"
+      ]
+    }
+  ],
+  "packageRules": [
+    {
+      "groupName": "go",
+      "matchPackageNames": [
+        "go",
+        "golang"
+      ],
+      "matchManagers": [
+        "gomod",
+        "dockerfile"
+      ]
+    }
   ],
   "postUpdateOptions": [
     "gomodTidy"
