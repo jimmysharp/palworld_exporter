@@ -22,11 +22,18 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      
+
+      - name: Get golangci-lint version from Dockerfile.dev
+        id: golangci-lint-version
+        run: |
+          golangci_version=$(grep -E "GOLANGCI_LINT_VERSION=\s*" Dockerfile.dev | sed -n 's/.*GOLANGCI_LINT_VERSION=\([^"]*\)/\1/p')
+          echo "value=$golangci_version" | tee -a "${GITHUB_OUTPUT}"
+        shell: bash
+
       - name: Lint checks
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.57
+          version: v${{ steps.golangci-lint-version.outputs.value }}
 
       - name: Run tests and coverage
         run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
