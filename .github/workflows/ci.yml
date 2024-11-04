@@ -33,7 +33,7 @@ jobs:
       - name: Lint checks
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v${{ steps.golangci-lint-version.outputs.value }}
+          version: ${{ steps.golangci-lint-version.outputs.value }}
 
       - name: Run tests and coverage
         run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
