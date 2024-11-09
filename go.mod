@@ -1,6 +1,6 @@
 module github.com/jimmysharp/palworld_exporter
 
-go 1.23.2
+go 1.23.3
 
 require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
