@@ -1,7 +1,7 @@
 FROM golang:1.23.6-bookworm
 
 # renovate: datasource=go depName=github.com/golangci/golangci-lint packageName=github.com/golangci/golangci-lint
-ARG GOLANGCI_LINT_VERSION=v1.63.4
+ARG GOLANGCI_LINT_VERSION=v1.64.5
 
 RUN go install golang.org/x/tools/gopls@v0.17.1
 RUN go install github.com/go-delve/delve/cmd/dlv@v1.24.0
