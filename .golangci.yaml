@@ -1,5 +1,5 @@
 run:
-  allow-paralles-runners: true
+  allow-parallel-runners: true
 linters:
   enable:
     - gofmt
