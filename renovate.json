@@ -25,18 +25,6 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Update go install packages in Dockerfiles",
-      "fileMatch": [
-        "(^|/|\\.)Dockerfile$",
-        "(^|/)Dockerfile\\.[^/]*$"
-      ],
-      "matchStrings": [
-        "go install (?<depName>[^@]+?)@(?<currentValue>.+)\n"
-      ],
-      "datasourceTemplate": "go"
-    },
-    {
-      "customType": "regex",
       "description": "Update _VERSION variables in Dockerfiles",
       "fileMatch": [
         "(^|/|\\.)Dockerfile$",
