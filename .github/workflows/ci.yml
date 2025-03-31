@@ -31,7 +31,7 @@ jobs:
         shell: bash
 
       - name: Lint checks
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: ${{ steps.golangci-lint-version.outputs.value }}
 
