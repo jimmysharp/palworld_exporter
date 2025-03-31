@@ -40,29 +40,29 @@ func (c *PalworldClient) GetMetrics() (*PalworldMetricsResponse, error) {
 	client := http.Client{Timeout: time.Duration(defaultTimeout)}
 	req, err := http.NewRequest(http.MethodGet, c.scrapeURI, nil)
 	if err != nil {
-		return nil, fmt.Errorf("Error building http request: %w", err)
+		return nil, fmt.Errorf("error building http request: %w", err)
 	}
 	req.SetBasicAuth(c.httpUsername, c.httpPassword)
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("Error http response: %w", err)
+		return nil, fmt.Errorf("error http response: %w", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("Invalid http status: %s (%d)", resp.Status, resp.StatusCode)
+		return nil, fmt.Errorf("invalid http status: %s (%d)", resp.Status, resp.StatusCode)
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("Error reading response body: %w", err)
+		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
 
 	metrics := &PalworldMetricsResponse{}
 	err = json.Unmarshal(body, metrics)
 	if err != nil {
-		return nil, fmt.Errorf("Response has Invalid JSON body: %w", err)
+		return nil, fmt.Errorf("response has Invalid JSON body: %w", err)
 	}
 
 	return metrics, nil
