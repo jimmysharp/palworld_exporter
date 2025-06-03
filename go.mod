@@ -46,15 +46,15 @@ require (
 	go.starlark.net v0.0.0-20231101134539-556fd59b42f6 // indirect
 	golang.org/x/arch v0.11.0 // indirect
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
-	golang.org/x/exp/typeparams v0.0.0-20231108232855-2478ac86f678 // indirect
-	golang.org/x/mod v0.22.0 // indirect
+	golang.org/x/exp/typeparams v0.0.0-20241210194714-1829a127f884 // indirect
+	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/telemetry v0.0.0-20241106142447-58a1122356f5 // indirect
+	golang.org/x/telemetry v0.0.0-20241220003058-cc96b6e0d3d9 // indirect
 	golang.org/x/text v0.25.0 // indirect
-	golang.org/x/tools v0.27.1-0.20241219162658-575221bfbda3 // indirect
-	golang.org/x/tools/gopls v0.17.1 // indirect
-	golang.org/x/vuln v1.0.4 // indirect
+	golang.org/x/tools v0.30.1-0.20250221230316-5055f70f240c // indirect
+	golang.org/x/tools/gopls v0.18.1 // indirect
+	golang.org/x/vuln v1.1.3 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/tools v0.5.1 // indirect
