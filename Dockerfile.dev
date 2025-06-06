@@ -1,4 +1,4 @@
-FROM golang:1.24.1-bookworm
+FROM golang:1.24.4-bookworm
 
 # renovate: datasource=go depName=github.com/golangci/golangci-lint packageName=github.com/golangci/golangci-lint
 ARG GOLANGCI_LINT_VERSION=v2.1.5
