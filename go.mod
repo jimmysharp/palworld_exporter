@@ -23,7 +23,7 @@ require (
 	github.com/fatih/camelcase v1.0.0 // indirect
 	github.com/fatih/gomodifytags v1.17.1-0.20250423142747-f3939df9aa3c // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
-	github.com/go-delve/delve v1.25.0 // indirect
+	github.com/go-delve/delve v1.25.1 // indirect
 	github.com/go-delve/liner v1.2.3-0.20231231155935-4726ab1d7f62 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-dap v0.12.0 // indirect
