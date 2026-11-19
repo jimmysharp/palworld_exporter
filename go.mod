@@ -5,7 +5,7 @@ go 1.26.1
 require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/prometheus/client_golang v1.23.0
-	github.com/prometheus/client_model v0.6.2
+	github.com/prometheus/client_model v0.6.3
 	github.com/prometheus/common v0.65.0
 	github.com/stretchr/testify v1.12.1
 )
@@ -55,7 +55,7 @@ require (
 	golang.org/x/tools v0.41.0 // indirect
 	golang.org/x/tools/gopls v0.21.1 // indirect
 	golang.org/x/vuln v1.1.4 // indirect
-	google.golang.org/protobuf v1.36.6 // indirect
+	google.golang.org/protobuf v1.36.12 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/tools v0.7.0-0.dev.0.20251022135355-8273271481d0 // indirect
 	mvdan.cc/gofumpt v0.8.0 // indirect
